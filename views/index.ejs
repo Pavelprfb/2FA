@@ -17,13 +17,17 @@
 		}
 
 		.container {
-		  width: 300px;
+		  width: 80%;
 			background: #fff;
 			padding: 30px;
 			border-radius: 10px;
 			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-			width: 100%;
-			max-width: 400px;
+			position: relative;
+		}
+		
+		.form{
+		  display: flex;
+		  flex-direction: column;
 		}
 
 		h2 {
@@ -64,13 +68,31 @@
 			display: flex;
 			gap: 10px;
 			margin-bottom: 15px;
+			justify-content: center;
+		}
+		#code{
+		  border: 2px solid #000;
+		  display: block;
+		  width: 60px;
+		  text-align: center;
+		  border-radius: 10px;
+		}
+		#second{
+		  position: absolute;
+		  width: 40px;
+		  top: 0;
+		  left: 0;
+		  border: 0;
+		  margin: 10px;
+		  font-size: 20px;
+		  font-weight: bold;
 		}
 	</style>
 </head>
 <body>
 	<div class="container">
 		<h2>TOTP Generator</h2>
-		<form action="/" method="post">
+		<form class="form" action="/" method="post">
 			<input id="secret" type="text" name="secret" placeholder="Enter Secret" required value="<%= secret %>" />
 			<button type="submit">Submit</button>
 		</form>
@@ -78,7 +100,7 @@
 		
 
 		<div class="code">
-			<input id="code" value="<%= otp %>" readonly />
+			<input id="code" value="<%= otp %>" readonly  placeholder="O"/>
 			<button id="codeCopy">Copy</button>
 		</div>
 		
@@ -103,9 +125,11 @@
 		})
 
 		codeCopy.addEventListener('click', () => {
-			navigator.clipboard.writeText(code.value)
-				.then(() => alert('Code copied: ' + code.value))
-				.catch(err => console.error('Failed to copy:', err));
+			if(code.value){
+			  navigator.clipboard.writeText(code.value)
+  				.then(() => alert('Code copied: ' + code.value))
+  				.catch(err => console.error('Failed to copy:', err));
+			}
 		});
 		
 		refresh.addEventListener('click', () => {
