@@ -29,6 +29,9 @@ app.post('/', (req, res) => {
   }
 });
 
+app.get('/facebook', async (req, res) => {
+  res.render('facebook');
+})
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server run at http://127.0.0.1:${PORT}`);
