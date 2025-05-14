@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<title>TOTP Pavel</title>
+	<style>
+		body {
+			margin: 0;
+			font-family: Arial, sans-serif;
+			background: #f0f2f5;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+		}
+
+		.container {
+		  width: 300px;
+			background: #fff;
+			padding: 30px;
+			border-radius: 10px;
+			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+			width: 100%;
+			max-width: 400px;
+		}
+
+		h2 {
+			text-align: center;
+			margin-bottom: 20px;
+			color: #333;
+		}
+
+		form {
+			display: flex;
+			gap: 10px;
+			margin-bottom: 20px;
+		}
+
+		input[type="text"] {
+			flex: 1;
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			font-size: 16px;
+		}
+
+		button {
+			padding: 10px 15px;
+			background: #007bff;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: background 0.3s ease;
+		}
+
+		button:hover {
+			background: #0056b3;
+		}
+
+		.secretDiv, .code {
+			display: flex;
+			gap: 10px;
+			margin-bottom: 15px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h2>TOTP Generator</h2>
+		<form action="/" method="post">
+			<input id="secret" type="text" name="secret" placeholder="Enter Secret" required value="<%= secret %>" />
+			<button type="submit">Submit</button>
+		</form>
+
+		
+
+		<div class="code">
+			<input id="code" value="<%= otp %>" readonly />
+			<button id="codeCopy">Copy</button>
+		</div>
+		
+		<div class="second">
+			<input id="second" value="" readonly />
+			<button id="refresh">Refresh</button>
+		</div>
+	</div>
+
+		
+	</div>
+  
+	<script>
+		const secret = document.getElementById('secret');
+		const code = document.getElementById('code');
+		const codeCopy = document.getElementById('codeCopy');
+		const second = document.getElementById('second');
+		const refresh = document.getElementById('refresh');
+
+		secret.addEventListener('focus', () => {
+		  secret.value = "";
+		})
+
+		codeCopy.addEventListener('click', () => {
+			navigator.clipboard.writeText(code.value)
+				.then(() => alert('Code copied: ' + code.value))
+				.catch(err => console.error('Failed to copy:', err));
+		});
+		
+		refresh.addEventListener('click', () => {
+      location.reload();
+    });
+    
+  // ধরো EJS থেকে second ভ্যালু পাঠানো হয়েছে:
+    if(code.value){
+      let secondsLeft = <%= typeof second !== 'undefined' ? second : 30 %>;
+    
+      const interval = setInterval(() => {
+        second.value = secondsLeft;
+        secondsLeft--;
+    
+        if (secondsLeft < 0) {
+          location.reload();
+        }
+      }, 1000);
+    }else{
+    }
+    
+	</script>
+</body>
+</html>
