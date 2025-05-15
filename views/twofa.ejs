@@ -85,6 +85,15 @@
 		  font-size: 20px;
 		  font-weight: bold;
 		}
+		
+    .link{
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+    a{
+      margin-top: 5px;
+    }
 	</style>
 </head>
 <body>
@@ -106,10 +115,14 @@
 			<input id="second" value="" readonly />
 			<button id="refresh">Refresh</button>
 		</div>
+		
+		
+		<div class="link">
+		  <a href="/facebook">Facebook UID Extractor</a>
+		  <a href="/random">Random Name Generator</a>
+		</div>
 	</div>
 
-		
-	</div>
   
 	<script>
 		const secret = document.getElementById('secret');
