@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<link rel="shortcut icon" href="pabel.png" type="image/x-icon" />
+	<title>TOTP Pavel</title>
+	<style>
+		body {
+			margin: 0;
+			font-family: Arial, sans-serif;
+		}
+
+		.container {
+		  width: 60%;
+			background: #fff;
+			padding: 20px;
+			border-radius: 10px;
+			box-shadow: 0 0 10px black;
+			position: relative;
+			display: block;
+			margin: 20px auto;
+		}
+		
+		.form{
+		  display: flex;
+		  flex-direction: column;
+		}
+
+		h2 {
+			text-align: center;
+			margin-bottom: 20px;
+			color: #333;
+		}
+
+		form {
+			display: flex;
+			gap: 10px;
+			margin-bottom: 20px;
+		}
+
+		input[type="text"] {
+			flex: 1;
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			font-size: 16px;
+		}
+
+		button {
+			padding: 10px 15px;
+			background: #007bff;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: background 0.3s ease;
+		}
+
+		button:hover {
+			background: #0056b3;
+		}
+
+		.secretDiv, .code {
+			display: flex;
+			gap: 10px;
+			margin-bottom: 15px;
+			justify-content: center;
+		}
+		#code{
+		  border: 2px solid #000;
+		  display: block;
+		  width: 60px;
+		  text-align: center;
+		  border-radius: 10px;
+		}
+		#second{
+		  position: absolute;
+		  width: 40px;
+		  top: 0;
+		  left: 0;
+		  border: 0;
+		  margin: 10px;
+		  font-size: 20px;
+		  font-weight: bold;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h2>TOTP Generator</h2>
+		<form class="form" action="/twofa" method="post">
+			<input id="secret" type="text" name="secret" placeholder="Enter Secret" required value="<%= secret %>" />
+			<button type="submit">Submit</button>
+		</form>
+
+		
+
+		<div class="code">
+			<input id="code" value="<%= otp %>" readonly  placeholder="O"/>
+			<button id="codeCopy">Copy</button>
+		</div>
+		
+		<div class="second">
+			<input id="second" value="" readonly />
+			<button id="refresh">Refresh</button>
+		</div>
+	</div>
+
+		
+	</div>
+  
+	<script>
+		const secret = document.getElementById('secret');
+		const code = document.getElementById('code');
+		const codeCopy = document.getElementById('codeCopy');
+		const second = document.getElementById('second');
+		const refresh = document.getElementById('refresh');
+
+		secret.addEventListener('focus', () => {
+		  secret.value = "";
+		})
+
+		codeCopy.addEventListener('click', () => {
+			if(code.value){
+			  navigator.clipboard.writeText(code.value)
+  				.then(() => alert('Code copied: ' + code.value))
+  				.catch(err => console.error('Failed to copy:', err));
+			}
+		});
+		
+		refresh.addEventListener('click', () => {
+      location.reload();
+    });
+    
+  // ধরো EJS থেকে second ভ্যালু পাঠানো হয়েছে:
+    if(code.value){
+      let secondsLeft = <%= typeof second !== 'undefined' ? second : 30 %>;
+    
+      const interval = setInterval(() => {
+        second.value = secondsLeft;
+        secondsLeft--;
+    
+        if (secondsLeft < 0) {
+          location.reload();
+        }
+      }, 1000);
+    }else{
+    }
+    
+	</script>
+</body>
+</html>

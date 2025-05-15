@@ -1,0 +1,578 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Random Name Generator</title>
+  
+  <style>
+    *{
+      padding: 0;
+      margin: 0;
+      font-family: sans-serif;
+    }
+    .container{
+      width: 60%;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      padding: 5px;
+      box-shadow: 0 0 10px black;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 10px;
+    }
+    h2{
+      text-align: center;
+    }
+    input{
+      border: 2px solid blue;
+      padding: 10px;
+      margin: 10px 0 10px;
+      border-radius: 5px;
+    }
+    button{
+      border: 0;
+      background: blue;
+      color: white;
+      border-radius: 5px;
+      padding: 10px 0;
+      margin-top: 10px;
+    }
+    button:hover{
+      background: black;
+      color: white;
+    }
+    .link{
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+    a{
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="container">
+    <h2>Random Name Generator</h2>
+    <input id="display" type="text" readonly />
+    <button id="copy" type="button">Copy</button>
+    <button id="refesh" type="button">Refesh</button>
+    
+    <div class="link">
+      <a href="/">TOTP Generator</a>
+      <a href="/facebook">Facebook UID Extractor</a>
+      
+    </div>
+  </div>
+  
+  <script>
+      const Islam = `Islam`;
+    const Ahmed = `Ahmed`;
+    const Khan = `Khan`;
+    const Hassan = `Hassan`;
+    const Ali = `Ali`;
+    const array = [
+      {
+        name: `Pavel ${Islam}`
+      },
+      {
+        name: `Pavel ${Ahmed}`
+      },
+      {
+        name: `Pavel ${Khan}`
+      },
+      {
+        name: `Pavel ${Hassan}`
+      },
+      {
+        name: `Pavel ${Ali}`
+      },
+      
+      
+      {
+        name: `Rasel ${Islam}`
+      },
+      {
+        name: `Rasel ${Ahmed}`
+      },
+      {
+        name: `Rasel ${Khan}`
+      },
+      {
+        name: `Rasel ${Hassan}`
+      },
+      {
+        name: `Rasel ${Ali}`
+      },
+      
+      
+      {
+        name: `Shumon ${Islam}`
+      },
+      {
+        name: `Shumon ${Ahmed}`
+      },
+      {
+        name: `Shumon ${Khan}`
+      },
+      {
+        name: `Shumon ${Hassan}`
+      },
+      {
+        name: `Shumon ${Ali}`
+      },
+      
+      
+      
+      {
+        name: `Mahin ${Islam}`
+      },
+      {
+        name: `Mahin ${Ahmed}`
+      },
+      {
+        name: `Mahin ${Khan}`
+      },
+      {
+        name: `Mahin ${Hassan}`
+      },
+      {
+        name: `Mahin ${Ali}`
+      },
+      
+      
+      {
+        name: `Rubel ${Islam}`
+      },
+      {
+        name: `Rubel ${Ahmed}`
+      },
+      {
+        name: `Rubel ${Khan}`
+      },
+      {
+        name: `Rubel ${Hassan}`
+      },
+      {
+        name: `Rubel ${Ali}`
+      },
+      
+      
+      {
+        name: `Sultan ${Islam}`
+      },
+      {
+        name: `Sultan ${Ahmed}`
+      },
+      {
+        name: `Sultan ${Khan}`
+      },
+      {
+        name: `Sultan ${Hassan}`
+      },
+      {
+        name: `Sultan ${Ali}`
+      },
+      
+      
+      {
+        name: `Shakib ${Islam}`
+      },
+      {
+        name: `Shakib ${Ahmed}`
+      },
+      {
+        name: `Shakib ${Khan}`
+      },
+      {
+        name: `Shakib ${Hassan}`
+      },
+      {
+        name: `Shakib ${Ali}`
+      },
+      
+      
+      {
+        name: `Milon ${Islam}`
+      },
+      {
+        name: `Milon ${Ahmed}`
+      },
+      {
+        name: `Milon ${Khan}`
+      },
+      {
+        name: `Milon ${Hassan}`
+      },
+      {
+        name: `Milon ${Ali}`
+      },
+      
+      
+      {
+        name: `Najmul ${Islam}`
+      },
+      {
+        name: `Najmul ${Ahmed}`
+      },
+      {
+        name: `Najmul ${Khan}`
+      },
+      {
+        name: `Najmul ${Hassan}`
+      },
+      {
+        name: `Najmul ${Ali}`
+      },
+      
+      
+      {
+        name: `Santo ${Islam}`
+      },
+      {
+        name: `Santo ${Ahmed}`
+      },
+      {
+        name: `Santo ${Khan}`
+      },
+      {
+        name: `Santo ${Hassan}`
+      },
+      {
+        name: `Santo ${Ali}`
+      },
+      
+      
+      {
+        name: `Hanif ${Islam}`
+      },
+      {
+        name: `Hanif ${Ahmed}`
+      },
+      {
+        name: `Hanif ${Khan}`
+      },
+      {
+        name: `Hanif ${Hassan}`
+      },
+      {
+        name: `Hanif ${Ali}`
+      },
+      
+      
+      {
+        name: `Humayon ${Islam}`
+      },
+      {
+        name: `Humayon ${Ahmed}`
+      },
+      {
+        name: `Humayon ${Khan}`
+      },
+      {
+        name: `Humayon ${Hassan}`
+      },
+      {
+        name: `Humayon ${Ali}`
+      },
+      
+      
+      {
+        name: `Akash ${Islam}`
+      },
+      {
+        name: `Akash ${Ahmed}`
+      },
+      {
+        name: `Akash ${Khan}`
+      },
+      {
+        name: `Akash ${Hassan}`
+      },
+      {
+        name: `Akash ${Ali}`
+      },
+      
+      
+      {
+        name: `Shabbir ${Islam}`
+      },
+      {
+        name: `Shabbir ${Ahmed}`
+      },
+      {
+        name: `Shabbir ${Khan}`
+      },
+      {
+        name: `Shabbir ${Hassan}`
+      },
+      {
+        name: `Shabbir ${Ali}`
+      },
+      
+      
+      {
+        name: `Mehedi ${Islam}`
+      },
+      {
+        name: `Mehedi ${Ahmed}`
+      },
+      {
+        name: `Mehedi ${Khan}`
+      },
+      {
+        name: `Mehedi ${Hassan}`
+      },
+      {
+        name: `Mehedi ${Ali}`
+      },
+      
+      
+      {
+        name: `Shakil ${Islam}`
+      },
+      {
+        name: `Shakil ${Ahmed}`
+      },
+      {
+        name: `Shakil ${Khan}`
+      },
+      {
+        name: `Shakil ${Hassan}`
+      },
+      {
+        name: `Shakil ${Ali}`
+      },
+      
+      
+      {
+        name: `Ruman ${Islam}`
+      },
+      {
+        name: `Ruman ${Ahmed}`
+      },
+      {
+        name: `Ruman ${Khan}`
+      },
+      {
+        name: `Ruman ${Hassan}`
+      },
+      {
+        name: `Ruman ${Ali}`
+      },
+      
+      
+      {
+        name: `Ekbal ${Islam}`
+      },
+      {
+        name: `Ekbal ${Ahmed}`
+      },
+      {
+        name: `Ekbal ${Khan}`
+      },
+      {
+        name: `Ekbal ${Hassan}`
+      },
+      {
+        name: `Ekbal ${Ali}`
+      },
+      
+      
+      {
+        name: `Rahim ${Islam}`
+      },
+      {
+        name: `Rahim ${Ahmed}`
+      },
+      {
+        name: `Rahim ${Khan}`
+      },
+      {
+        name: `Rahim ${Hassan}`
+      },
+      {
+        name: `Rahim ${Ali}`
+      },
+      
+      
+      {
+        name: `Karim ${Islam}`
+      },
+      {
+        name: `Karim ${Ahmed}`
+      },
+      {
+        name: `Karim ${Khan}`
+      },
+      {
+        name: `Karim ${Hassan}`
+      },
+      {
+        name: `Karim ${Ali}`
+      },
+      
+      
+      {
+        name: `Mobin ${Islam}`
+      },
+      {
+        name: `Mobin ${Ahmed}`
+      },
+      {
+        name: `Mobin ${Khan}`
+      },
+      {
+        name: `Mobin ${Hassan}`
+      },
+      {
+        name: `Mobin ${Ali}`
+      },
+      
+      
+      {
+        name: `Hamidul ${Islam}`
+      },
+      {
+        name: `Hamidul ${Ahmed}`
+      },
+      {
+        name: `Hamidul ${Khan}`
+      },
+      {
+        name: `Hamidul ${Hassan}`
+      },
+      {
+        name: `Hamidul ${Ali}`
+      },
+      
+      
+      {
+        name: `Sipon ${Islam}`
+      },
+      {
+        name: `Sipon ${Ahmed}`
+      },
+      {
+        name: `Sipon ${Khan}`
+      },
+      {
+        name: `Sipon ${Hassan}`
+      },
+      {
+        name: `Sipon ${Ali}`
+      },
+      
+      
+      {
+        name: `Omit ${Islam}`
+      },
+      {
+        name: `Omit ${Ahmed}`
+      },
+      {
+        name: `Omit ${Khan}`
+      },
+      {
+        name: `Omit ${Hassan}`
+      },
+      {
+        name: `Omit ${Ali}`
+      },
+      
+      
+      {
+        name: `Hussain ${Islam}`
+      },
+      {
+        name: `Hussain ${Ahmed}`
+      },
+      {
+        name: `Hussain ${Khan}`
+      },
+      {
+        name: `Hussain ${Hassan}`
+      },
+      {
+        name: `Hussain ${Ali}`
+      },
+      
+      
+      {
+        name: `Noyon ${Islam}`
+      },
+      {
+        name: `Noyon ${Ahmed}`
+      },
+      {
+        name: `Noyon ${Khan}`
+      },
+      {
+        name: `Noyon ${Hassan}`
+      },
+      {
+        name: `Noyon ${Ali}`
+      },
+      
+      
+      {
+        name: `Suriful ${Islam}`
+      },
+      {
+        name: `Suriful ${Ahmed}`
+      },
+      {
+        name: `Suriful ${Khan}`
+      },
+      {
+        name: `Suriful ${Hassan}`
+      },
+      {
+        name: `Suriful ${Ali}`
+      },
+      
+      
+      {
+        name: `Zubayer ${Islam}`
+      },
+      {
+        name: `Zubayer ${Ahmed}`
+      },
+      {
+        name: `Zubayer ${Khan}`
+      },
+      {
+        name: `Zubayer ${Hassan}`
+      },
+      {
+        name: `Zubayer ${Ali}`
+      },
+    ];
+    
+    
+    
+    const display = document.getElementById('display');
+    const copy = document.getElementById('copy');
+    const refesh = document.getElementById('refesh');
+    
+    
+    const random = Math.floor(Math.random()*50);
+    display.value = array[random].name;
+    
+    copy.addEventListener('click', () => {
+      navigator.clipboard.writeText(display.value)
+      .then(() => {
+        alert(display.value)
+      })
+    });
+    
+    refesh.addEventListener('click', () => {
+      location.reload();
+    });
+    
+  </script>
+</body>
+</html>

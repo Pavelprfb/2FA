@@ -13,18 +13,21 @@
     body {
       font-family: Arial;
       text-align: center;
-      padding: 40px;
+      padding: 20px;
       background-color: #f0f0f0;
-      width: 250px;
+      width: 60%;
       margin: auto;
       box-shadow: 0 0 10px black;
       border-radius: 5px;
-      margin-top: 30px;
+      margin-top: 20px;
     }
     #fbLink {
-    	width: 100%;
+    	width: 80%;
     	background: #f0f0f0;
     	border: 2px solid blue;
+    	color: black;
+    	font-size: 12px;
+    	font-weight: bold;
     }
     #fbLink:focus{
     	border: 2px solid blue;
@@ -46,13 +49,17 @@
     #copyBtn {
       margin-top: 10px;
       display: none;
-      background-color: #4CAF50;
+      background-color: blue;
       color: white;
       border: none;
       cursor: pointer;
     }
     #copyBtn:hover {
       background-color: #45a049;
+    }
+    .link{
+      display: flex;
+      flex-direction: column;
     }
   </style>
 </head>
@@ -64,10 +71,17 @@
 
   <div id="result"></div>
   <button id="copyBtn" onclick="copyUID()">Copy UID</button>
-
+  <br />
+  <div class="link">
+    <a href="/">TOTP Generator</a>
+    <a href="/random">Random Name Generator</a>
+  </div>
   <script>
     let currentUID = '';
-
+    const fbLink = document.getElementById('fbLink');
+    fbLink.addEventListener('focus', () => {
+      fbLink.value = "";
+    });
     function extractUID() {
       const link = document.getElementById('fbLink').value;
       const match = link.match(/id=([0-9]+)/);

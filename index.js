@@ -8,10 +8,13 @@ app.set('view engine', 'ejs');
 app.use(express.static("public"));
 
 app.get('/', (req, res) => {
-  res.render('index', { secret: '', otp: '' });
+  res.render('index');
+});
+app.get('/twofa', (req, res) => {
+  res.render('twofa', { secret: '', otp: '' });
 });
 
-app.post('/', (req, res) => {
+app.post('/twofa', (req, res) => {
   const { secret } = req.body;
 
   const cleanedSecret = secret.replace(/\s+/g, '');
@@ -31,6 +34,9 @@ app.post('/', (req, res) => {
 
 app.get('/facebook', async (req, res) => {
   res.render('facebook');
+})
+app.get('/random', async (req, res) => {
+  res.render('randomNameGenerator');
 })
 const PORT = 3000;
 app.listen(PORT, () => {
