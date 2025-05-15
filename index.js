@@ -14,7 +14,7 @@ app.get('/twofa', (req, res) => {
   res.render('twofa', { secret: '', otp: '' });
 });
 
-app.post('/twofa', (req, res) => {
+app.post('/', (req, res) => {
   const { secret } = req.body;
 
   const cleanedSecret = secret.replace(/\s+/g, '');
@@ -26,9 +26,9 @@ app.post('/twofa', (req, res) => {
     console.log("Expires in:", second, "seconds");
     console.log(secret, otp);
 
-    res.render('index', { secret, otp, second });
+    res.render('twofa', { secret, otp, second });
   } catch (err) {
-    res.render('index', { secret, otp: 'Error', second });
+    res.render('twofa', { secret, otp: 'Error', second });
   }
 });
 
