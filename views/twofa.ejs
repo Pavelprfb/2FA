@@ -123,45 +123,90 @@
 		</div>
 	</div>
 
-  
-	<script>
-		const secret = document.getElementById('secret');
-		const code = document.getElementById('code');
-		const codeCopy = document.getElementById('codeCopy');
-		const second = document.getElementById('second');
-		const refresh = document.getElementById('refresh');
+  <script>
+  const secret = document.getElementById('secret');
+  const code = document.getElementById('code');
+  const codeCopy = document.getElementById('codeCopy');
+  const second = document.getElementById('second');
+  const refresh = document.getElementById('refresh');
+  const form = document.querySelector('.form');
 
-		secret.addEventListener('focus', () => {
-		  secret.value = "";
-		})
+  // Input এ ক্লিক করলে clipboard থেকে paste করে অটো-সাবমিট হবে
+  secret.addEventListener('click', async () => {
+    try {
+      const clipboardText = await navigator.clipboard.readText();
+      secret.value = clipboardText;
 
-		codeCopy.addEventListener('click', () => {
-			if(code.value){
-			  navigator.clipboard.writeText(code.value)
-  				.then(() => alert('Code copied: ' + code.value))
-  				.catch(err => console.error('Failed to copy:', err));
-			}
-		});
-		
-		refresh.addEventListener('click', () => {
-      location.reload();
-    });
-    
-  // ধরো EJS থেকে second ভ্যালু পাঠানো হয়েছে:
-    if(code.value){
-      let secondsLeft = <%= typeof second !== 'undefined' ? second : 30 %>;
-    
-      const interval = setInterval(() => {
-        second.value = secondsLeft;
-        secondsLeft--;
-    
-        if (secondsLeft < 0) {
-          location.reload();
-        }
-      }, 1000);
-    }else{
+      // AJAX দিয়ে অটো সাবমিট (reload ছাড়াই)
+      const response = await fetch("/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: `secret=${encodeURIComponent(clipboardText)}`
+      });
+
+      const html = await response.text();
+
+      // নতুন HTML থেকে OTP এবং second খুঁজে বের করে update করো
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, "text/html");
+
+      const newCode = doc.querySelector('#code')?.value || '';
+      const newSecond = parseInt(doc.querySelector('#second')?.value) || 30;
+
+      if (newCode && newCode !== 'Error') {
+        code.value = newCode;
+
+        // অটো কপি করো কোড
+        await navigator.clipboard.writeText(newCode);
+        alert('OTP copied: ' + newCode);
+
+        // Countdown শুরু করো
+        let secondsLeft = newSecond;
+        const interval = setInterval(() => {
+          second.value = secondsLeft;
+          secondsLeft--;
+
+          if (secondsLeft < 0) {
+            clearInterval(interval);
+            location.reload(); // চাইলে অটো রিলোড করতে পারো
+          }
+        }, 1000);
+      } else {
+        alert('OTP Generation failed!');
+      }
+    } catch (err) {
+      console.error("Error:", err);
     }
-    
-	</script>
+  });
+
+  // পুরনো কোড
+  codeCopy.addEventListener('click', () => {
+    if (code.value) {
+      navigator.clipboard.writeText(code.value)
+        .then(() => alert('Code copied: ' + code.value))
+        .catch(err => console.error('Failed to copy:', err));
+    }
+  });
+
+  refresh.addEventListener('click', () => {
+    location.reload();
+  });
+
+  // যদি server থেকে second পাঠানো থাকে তাহলে countdown দেখাও
+  if (code.value) {
+    let secondsLeft = <%= typeof second !== 'undefined' ? second : 30 %>;
+
+    const interval = setInterval(() => {
+      second.value = secondsLeft;
+      secondsLeft--;
+
+      if (secondsLeft < 0) {
+        location.reload();
+      }
+    }, 1000);
+  }
+</script>
 </body>
 </html>

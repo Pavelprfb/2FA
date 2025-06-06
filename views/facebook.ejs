@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<link rel="shortcut icon" href="pabel.png" type="image/x-icon" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Facebook UID Extractor</title>
   <style>
-  	* {
-  		padding: 0;
-  		margin: 0;
-  	}
+    * {
+      padding: 0;
+      margin: 0;
+    }
     body {
       font-family: Arial;
       text-align: center;
@@ -23,15 +21,12 @@
       margin-top: 20px;
     }
     #fbLink {
-    	width: 80%;
-    	background: #f0f0f0;
-    	border: 2px solid blue;
-    	color: black;
-    	font-size: 12px;
-    	font-weight: bold;
-    }
-    #fbLink:focus{
-    	border: 2px solid blue;
+      width: 80%;
+      background: #f0f0f0;
+      border: 2px solid blue;
+      color: black;
+      font-size: 12px;
+      font-weight: bold;
     }
     input, button {
       padding: 10px;
@@ -47,18 +42,7 @@
       margin-top: 20px;
       color: #333;
     }
-    #copyBtn {
-      margin-top: 10px;
-      display: none;
-      background-color: blue;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    #copyBtn:hover {
-      background-color: #45a049;
-    }
-    .link{
+    .link {
       display: flex;
       flex-direction: column;
     }
@@ -66,41 +50,40 @@
 </head>
 <body>
   <h2>Extract Facebook UID</h2>
-  <input type="text" id="fbLink" placeholder="Enter Facebook profile link">
-  <br>
-  <button onclick="extractUID()">Submit</button>
-
+  <input type="text" id="fbLink" placeholder="Click to auto-paste & extract">
   <div id="result"></div>
-  <button id="copyBtn" onclick="copyUID()">Copy UID</button>
-  <br />
   <div class="link">
     <a href="/twofa">TOTP Generator</a>
     <a href="/random">Random Name Generator</a>
   </div>
-  <script>
-    let currentUID = '';
-    const fbLink = document.getElementById('fbLink');
-    fbLink.addEventListener('focus', () => {
-      fbLink.value = "";
-    });
-    function extractUID() {
-      const link = document.getElementById('fbLink').value;
-      const match = link.match(/id=([0-9]+)/);
-      if (match && match[1]) {
-        currentUID = match[1];
-        document.getElementById('result').innerText = "UID: " + currentUID;
-        document.getElementById('copyBtn').style.display = "inline-block";
-      } else {
-        document.getElementById('result').innerText = "Please enter a valid link!";
-        document.getElementById('copyBtn').style.display = "none";
-      }
-    }
 
-    function copyUID() {
-      navigator.clipboard.writeText(currentUID).then(() => {
-        alert("UID copied: " + currentUID);
-      });
-    }
+  <script>
+    let currentUID = "";
+    const fbLink = document.getElementById("fbLink");
+
+    fbLink.addEventListener("click", async () => {
+      try {
+        // 1. Clipboard থেকে ফেসবুক লিংক পড়া
+        const text = await navigator.clipboard.readText();
+        fbLink.value = text;
+
+        // 2. UID এক্সট্র্যাকশন
+        const match = text.match(/id=([0-9]+)/);
+        if (match && match[1]) {
+          currentUID = match[1];
+          document.getElementById("result").innerText = "UID: " + currentUID;
+
+          // 3. অটো কপি করা UID
+          await navigator.clipboard.writeText(currentUID);
+          alert("UID copied: " + currentUID);
+        } else {
+          document.getElementById("result").innerText = "Please enter a valid link!";
+        }
+      } catch (err) {
+        console.error("Clipboard read failed:", err);
+        alert("Clipboard access blocked. Allow permission and try again.");
+      }
+    });
   </script>
 </body>
 </html>
