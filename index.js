@@ -38,6 +38,9 @@ app.get('/facebook', async (req, res) => {
 app.get('/random', async (req, res) => {
   res.render('randomNameGenerator');
 })
+app.get('/all', async (req, res) => {
+  res.render('all')
+});
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server run at http://127.0.0.1:${PORT}`);
