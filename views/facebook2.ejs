@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<link rel="shortcut icon" href="pabel.png" type="image/x-icon" />
+  <title>Facebook UID Extractor</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    body {
+      font-family: Arial;
+      text-align: center;
+      padding: 20px;
+      background-color: #f0f0f0;
+      width: 60%;
+      margin: auto;
+      box-shadow: 0 0 10px black;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+    #fbLink {
+      width: 80%;
+      background: #f0f0f0;
+      border: 2px solid blue;
+      color: black;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 10px 0;
+      border: 0;
+      background: blue;
+      color: white;
+      border-radius: 5px;
+    }
+    #result {
+      font-weight: bold;
+      margin-top: 20px;
+      color: #333;
+      display: none;
+    }
+    .link {
+      display: flex;
+      flex-direction: column;
+    }
+    #message.active{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 200px;
+      height: 20px;
+      padding: 10px;
+      border-radius: 5px;
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #0056b3;
+      color: white;
+      text-align: center;
+      font-size: 13px;
+      
+    }
+    #message.delete{
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <span id="message" class="delete">Message</span>
+  <h2>Extract Facebook UID</h2>
+  <input type="text" id="fbLink" placeholder="Type or paste FB link to extract UID">
+  
+  <div class="link">
+    <a href="/twofa">TOTP Generator</a>
+    <a href="/random">Random Name Generator</a>
+  </div>
+
+  <script>
+    const message = document.getElementById('message');
+    const fbLink = document.getElementById("fbLink");
+    
+    fbLink.addEventListener('click', async () => {
+      fbLink.value = '';
+    })
+    fbLink.addEventListener("keyup", async () => {
+      const text = fbLink.value.trim();
+      const match = text.match(/id=([0-9]+)/);
+      
+      
+      
+      if (match && match[1]) {
+        const uid = match[1];
+        
+          message.innerHTML = `Copy: ${uid}`;
+          message.classList.remove('delete');
+          message.classList.add('active');
+          setTimeout(() => {
+            message.classList.add('delete');
+            message.classList.remove('active');
+          }, 3000);
+        
+
+        try {
+          
+          await navigator.clipboard.writeText(uid);
+          
+        } catch (err) {
+          console.error("Copy failed:", err);
+          alert("Failed to copy UID");
+        }
+      } else {
+        result.innerText = "Please enter a valid Facebook profile link with 'id=' in it.";
+      }
+    });
+  </script>
+</body>
+</html>
