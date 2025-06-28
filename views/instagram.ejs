@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Multi View Page</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .frame-box {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px black;
+      padding: 10px;
+      width: 100%;
+      max-width: 600px;
+      height: 500px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .frame-box h3 {
+      text-align: center;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: 2px solid blue;
+      border-radius: 5px;
+    }
+
+    /* Tablet responsive */
+    @media (max-width: 768px) {
+      .frame-box {
+        height: 420px;
+        padding: 8px;
+      }
+      h2 {
+        font-size: 22px;
+      }
+    }
+
+    /* Mobile responsive */
+    @media (max-width: 480px) {
+      body {
+        padding: 10px;
+      }
+      .frame-box {
+        height: 350px;
+        padding: 6px;
+        height: 100px;
+      }
+      h2 {
+        font-size: 20px;
+      }
+      .frame-box h3 {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Multi Tool Dashboard</h2>
+
+  <div class="container">
+    <div class="frame-box">
+      <h3>Username Generator</h3>
+      <iframe src="/username"></iframe>
+    </div>
+
+    <div class="frame-box">
+      <h3>Text Save & Copy</h3>
+      <iframe src="/text-save"></iframe>
+    </div>
+
+    <div class="frame-box">
+      <h3>Random Tool</h3>
+      <iframe src="/random"></iframe>
+    </div>
+  </div>
+
+</body>
+</html>

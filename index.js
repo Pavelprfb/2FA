@@ -56,6 +56,9 @@ app.get('/username', async (req, res) => {
 app.get('/text-save', async (req, res) => {
   res.render('testSave')
 });
+app.get('/instagram', async (req, res) => {
+  res.render('instagram')
+});
 
 
 
