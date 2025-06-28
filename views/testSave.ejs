@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="shortcut icon" href="pabel.png" type="image/x-icon" />
+  <title>Copy & Save Text</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    body {
+      font-family: Arial;
+      text-align: center;
+      padding: 20px;
+      background-color: #f0f0f0;
+      width: 60%;
+      margin: auto;
+      box-shadow: 0 0 10px black;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+
+    #fbLink {
+      width: 80%;
+      background: #f0f0f0;
+      border: 2px solid blue;
+      color: black;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    input,
+    button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 10px 0;
+      border: 0;
+      background: blue;
+      color: white;
+      border-radius: 5px;
+    }
+
+    #result {
+      font-weight: bold;
+      margin-top: 20px;
+      color: #333;
+    }
+
+    .link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .copied-msg {
+      margin-top: 10px;
+      color: green;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Save & Copy Input Text</h2>
+
+  <div class="link">
+    <input type="text" id="fbLink" placeholder="Write something...">
+    <button onclick="copyAndSave()">Copy & Save</button>
+    <div id="result"></div>
+    <div id="copied" class="copied-msg"></div>
+  </div>
+
+  <script>
+    // Show saved text from cookies on page load
+    window.onload = function () {
+      const saved = getCookie("savedText");
+      if (saved) {
+        document.getElementById("fbLink").value = saved;
+        document.getElementById("result").innerText = "Saved text loaded from cookies.";
+      }
+    };
+
+    function copyAndSave() {
+      const text = document.getElementById("fbLink").value;
+      if (!text.trim()) return;
+
+      // Copy to clipboard
+      navigator.clipboard.writeText(text).then(() => {
+        document.getElementById("copied").innerText = "Copied & Saved!";
+        setTimeout(() => {
+          document.getElementById("copied").innerText = "";
+        }, 2000);
+      });
+
+      // Save to cookies (for 7 days)
+      document.cookie = `savedText=${encodeURIComponent(text)}; path=/; max-age=${60 * 60 * 24 * 7}`;
+
+      document.getElementById("result").innerText = "Text saved in cookies.";
+    }
+
+    function getCookie(name) {
+      const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+      if (match) return decodeURIComponent(match[2]);
+      return null;
+    }
+  </script>
+
+</body>
+</html>

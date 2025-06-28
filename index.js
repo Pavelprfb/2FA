@@ -53,6 +53,9 @@ app.get('/all2', async (req, res) => {
 app.get('/username', async (req, res) => {
   res.render('username')
 });
+app.get('/text-save', async (req, res) => {
+  res.render('testSave')
+});
 
 
 
