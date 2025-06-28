@@ -50,6 +50,9 @@ app.get('/all', async (req, res) => {
 app.get('/all2', async (req, res) => {
   res.render('all2')
 });
+app.get('/username', async (req, res) => {
+  res.render('username')
+});
 
 
 

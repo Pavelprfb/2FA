@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="shortcut icon" href="pabel.png" type="image/x-icon" />
+  <title>Username Generator</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    body {
+      font-family: Arial;
+      text-align: center;
+      padding: 20px;
+      background-color: #f0f0f0;
+      width: 60%;
+      margin: auto;
+      box-shadow: 0 0 10px black;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+
+    #fbLink {
+      width: 80%;
+      background: #f0f0f0;
+      border: 2px solid blue;
+      color: black;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    input,
+    button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 10px 0;
+      border: 0;
+      background: blue;
+      color: white;
+      border-radius: 5px;
+    }
+
+    #result {
+      font-weight: bold;
+      margin-top: 20px;
+      color: #333;
+    }
+
+    .link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .copied-msg {
+      margin-top: 10px;
+      color: green;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Random Username Generator</h2>
+
+  <div class="link">
+    <input type="text" id="fbLink" readonly placeholder="Your username will appear here">
+    <button onclick="generateUsername()">Generate & Copy</button>
+    <div id="result"></div>
+    <div id="copied" class="copied-msg"></div>
+  </div>
+
+  <script>
+    function generateUsername() {
+      const letters = 'abcdefghijklmnopqrstuvwxyz';
+      let name = '';
+      for (let i = 0; i < 8; i++) {
+        name += letters[Math.floor(Math.random() * letters.length)];
+      }
+      name = name.charAt(0).toUpperCase() + name.slice(1);
+      const number = Math.floor(10000000 + Math.random() * 90000000);
+      const username = `${name}${number}`;
+
+      document.getElementById('fbLink').value = username;
+      document.getElementById('result').innerText = `Generated: ${username}`;
+
+      // Auto copy to clipboard
+      navigator.clipboard.writeText(username).then(() => {
+        document.getElementById('copied').innerText = 'Copied to clipboard!';
+        setTimeout(() => {
+          document.getElementById('copied').innerText = '';
+        }, 2000);
+      });
+    }
+  </script>
+
+</body>
+</html>
